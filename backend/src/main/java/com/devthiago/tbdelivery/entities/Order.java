@@ -17,9 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,9 +95,10 @@ public class Order implements Serializable {
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
+	
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public Set<Product> getProducts(){
+		return products;
 	}
 
 	@Override
