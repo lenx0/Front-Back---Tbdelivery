@@ -1,5 +1,6 @@
 package com.devthiago.tbdelivery.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devthiago.tbdelivery.dto.OrderDTO;
 import com.devthiago.tbdelivery.dto.ProductDTO;
 import com.devthiago.tbdelivery.entities.Order;
+import com.devthiago.tbdelivery.entities.OrderStatus;
 import com.devthiago.tbdelivery.entities.Product;
 import com.devthiago.tbdelivery.repositories.OrderRepository;
 import com.devthiago.tbdelivery.repositories.ProductRepository;
@@ -19,6 +21,9 @@ public class OrderService {
 
 	@Autowired
 	private OrderRepository repository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Transactional(readOnly = true)
 	public List<OrderDTO> findAll() {
@@ -27,4 +32,16 @@ public class OrderService {
 
 	}
 
+	@Transactional
+	public OrderDTO insert(OrderDTO dto) {
+		Order order = new Order(null, dto.getAddress(), dto.getLatitude(), dto.getLongitude(),
+				Instant.now(), OrderStatus.PENDING);
+		for (ProductDTO p : dto.getProducts()) {
+			Product product = productRepository.getOne(p.getId());
+			order.getProducts().add(product);
+			
+		}
+		order = repository.save(order);
+		return new OrderDTO(order);
+	}
 }
