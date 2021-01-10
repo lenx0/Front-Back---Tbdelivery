@@ -1,0 +1,18 @@
+.main-navbar {
+    height: 75px;
+    background-color: #E84444;
+    padding-left: 116px;
+    display: flex;
+    align-items: center;
+
+}
+
+.logo-text{
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 31px;
+    text-align: center;
+
+    color: #FFFFFF;
+    margin-left: 8px;
+}
